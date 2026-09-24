@@ -1,0 +1,276 @@
+/* Amazon Seller home clone – iPhone 15/16 frame (393 x 852 pt). Every value is measured from the 3x screenshots. */
+
+/* The app uses Amazon's 2025 typefaces (Ember Modern Text / Ember Modern Display, by NaN), not classic Ember. */
+@font-face { font-family: "Ember Modern Text"; src: url("../fonts/modern/EmberModernTextV1.1-Regular.otf") format("opentype"); font-weight: 400; font-display: block; }
+@font-face { font-family: "Ember Modern Text"; src: url("../fonts/modern/EmberModernTextV1.1-Bold.otf") format("opentype"); font-weight: 700; font-display: block; }
+@font-face { font-family: "Ember Modern Display Std"; src: url("../fonts/modern/EmberModernDisplayStandard-Regular.woff2") format("woff2"); font-weight: 400; font-display: block; }
+@font-face { font-family: "Ember Modern Display Std"; src: url("../fonts/modern/EmberModernDisplayStandard-Bold.woff2") format("woff2"); font-weight: 700; font-display: block; }
+@font-face { font-family: "Ember Modern Display"; src: url("../fonts/modern/EmberModernDisplayV1.1-Regular.otf") format("opentype"); font-weight: 400; font-display: block; }
+@font-face { font-family: "Ember Modern Display"; src: url("../fonts/modern/EmberModernDisplayV1.1-Bold.otf") format("opentype"); font-weight: 700; font-display: block; }
+@font-face { font-family: "SF Pro"; src: url("../fonts/SF-Pro.ttf") format("truetype"); font-weight: 1 1000; font-display: block; }
+
+:root {
+  --header-bg: #f7f7f7;
+  --page-bg: #f2f4f5;
+  --ink: #232f3e;          /* titles, tab text, axis titles */
+  --ink-title: #161d26;
+  --label: #3f4a59;        /* secondary labels */
+  --blue: #0578ff;         /* Performance tab, View reports */
+  --teal: #004954;         /* active pill */
+  --teal-bg: #e2f4f7;      /* inactive pill */
+  --orange: #ff9900;
+  --grid: #ebeeef;
+  --tick: #757575;
+  --border: #bdc0c5;
+  --tab-blue: #1e88e5;
+  --tab-grey: #8e8e93;
+  --hair: 0.33px;
+  --sb: 59px;              /* status-bar strip; 0 on the phone, where the web view starts below it */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  background: #e9ebec;
+  font-family: "Ember Modern Text", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; text-align: left; }
+img { display: block; user-select: none; -webkit-user-drag: none; }
+input { font: inherit; color: inherit; }
+h2, h3 { font-weight: 700; }
+
+/* ---------- Device frame ---------- */
+.phone {
+  position: relative;
+  width: 393px;
+  height: 852px;
+  overflow: hidden;
+  background: var(--page-bg);
+  margin: 0 auto;
+}
+@media (min-width: 480px) {
+  body { display: grid; place-items: center; background: #dfe2e4; min-height: 100%; }
+  .phone { border-radius: 50px; box-shadow: 0 0 0 1px #c5c8cb, 0 30px 80px rgba(0,0,0,.25); }
+}
+body.bare { display: block; background: #fff; }
+body.bare .phone { margin: 0; border-radius: 0; box-shadow: none; }
+body.bare * { transition: none !important; }
+@media (max-width: 479px) {
+  /* On the phone the real status bar sits in the 59pt strip at the top; the layout is identical. */
+  /* iOS paints the status-bar strip from the page background at launch and never updates it,
+     so every layer stays the header grey (the launch screen therefore gets a light strip). */
+  html, body { background: var(--header-bg); }
+  .phone { position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; --sb: 0px; background: var(--header-bg); }
+  html.splashing, html.splashing body, html.splashing .phone { background: #394b63; }
+  .status-bar, .home-indicator { display: none; }
+}
+
+/* ---------- Status bar ---------- */
+.status-bar { position: absolute; top: 0; left: 0; width: 100%; height: 59px; z-index: 5; pointer-events: none; }
+.status-bar .time {
+  position: absolute; top: 18.8px; left: 36px; width: 71px; text-align: center;
+  font-family: "SF Pro", -apple-system, system-ui, sans-serif; font-weight: 600; font-size: 17px; line-height: 1.2; color: #000;
+  font-feature-settings: "tnum"; font-variation-settings: "opsz" 28; letter-spacing: -0.2px;
+}
+.status-bar .status-icons { position: absolute; top: 19.3px; left: 278.7px; width: 84.67px; height: 20px; }
+
+/* ---------- Header ---------- */
+.topbar {
+  position: absolute; top: 0; left: 0; width: 100%; height: calc(var(--sb) + 39px);
+  background: var(--header-bg);
+  box-shadow: 0 0.67px 0 #b0b2b4;
+  z-index: 4;
+}
+.flag-btn { position: absolute; left: 16px; top: calc(var(--sb) + 6.3px); width: 49px; height: 20px; }
+.flag { width: 34px; height: 20px; }
+.flag-chev { position: absolute; left: 39px; top: 7px; }
+.logo { position: absolute; left: 132px; top: calc(var(--sb) + 1.7px); width: 129.67px; height: 30.33px; }
+.ic-sparkle { position: absolute; left: 314px; top: calc(var(--sb) + 7.7px); width: 18.67px; height: 18.67px; }
+.ic-scan { position: absolute; left: 351.7px; top: calc(var(--sb) + 5.7px); width: 21px; height: 21px; }
+
+/* ---------- Scroll area ---------- */
+.scroll {
+  position: absolute; top: calc(var(--sb) + 40px); left: 0; width: 100%; bottom: 83px;
+  overflow-y: auto; overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  background: var(--page-bg);
+  scrollbar-width: none;
+}
+.scroll::-webkit-scrollbar { display: none; }
+
+.healthy { position: relative; height: 47.67px; background: #fff; box-shadow: 0 var(--hair) 0 #d5d7d9; }
+.check { position: absolute; left: 10.3px; top: 16.7px; width: 14.33px; height: 14px; }
+.healthy-text { position: absolute; left: 32.7px; top: 12.9px; font-weight: 400; -webkit-text-stroke: 0.3px currentColor; font-size: 16.1px; line-height: 1.2; color: #1c2227; white-space: nowrap; }
+.healthy-chev { position: absolute; left: 369.7px; top: 16.8px; }
+
+.tabs { position: relative; height: 43px; background: var(--page-bg); border-bottom: 1px solid #ebedf0; display: flex; }
+.tab {
+  position: relative; height: 42px; padding: 0 12.3px; margin-right: 14.3px;
+  font-weight: 400; -webkit-text-stroke: 0.25px currentColor; font-size: 10.3px; line-height: 1.2; color: var(--ink); white-space: nowrap;
+  padding-top: 5.9px;
+}
+.tab.active { color: var(--blue); }
+.tab.active::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--blue); }
+
+/* ---------- Cards ---------- */
+.card {
+  position: relative;
+  margin: 0 6px 4px;
+  background: #fff;
+  border: 0.67px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 0 2.5px rgba(0,0,0,.09);
+  overflow: hidden;
+}
+.card:first-of-type { margin-top: 10.3px; }
+.card-sales { height: 399px; }
+.card-simple { height: 171px; }
+.card-orders { height: 233px; }
+.scroll-end { height: 12px; }
+
+/* All positions inside cards are relative to the card's outer top-left (border included). */
+.card > * { position: absolute; }
+.title { left: 17.3px; top: 14.9px; font-size: 17px; line-height: 1.2; color: var(--ink-title); white-space: nowrap; }
+.title-sales { top: 17.1px; }
+.kebab { left: 340px; top: 8.7px; width: 22px; height: 30px; }
+.card-sales .kebab { top: 12px; }
+.kebab i { position: absolute; left: 9.3px; width: 3.3px; height: 3.3px; border-radius: 50%; background: var(--ink); }
+.kebab i:nth-child(1) { top: 9.4px; } .kebab i:nth-child(2) { top: 15px; } .kebab i:nth-child(3) { top: 20.6px; }
+.view-reports { right: 52px; top: 20.7px; font-weight: 400; -webkit-text-stroke: 0.3px currentColor; font-size: 13px; line-height: 1.2; color: var(--blue); white-space: nowrap; }
+
+/* Sales card */
+.pills { left: 17.3px; top: 52px; height: 21.3px; display: flex; gap: 12px; }
+.pill {
+  height: 21.3px; padding: 0 8px; border-radius: 11px;
+  background: var(--teal-bg); color: var(--teal);
+  font-family: "Ember Modern Display Std", "Ember Modern Text", sans-serif; font-weight: 700; font-size: 10.9px; line-height: 21.3px; text-transform: uppercase; white-space: nowrap;
+}
+.pill.active { background: var(--teal); color: #fff; }
+
+.metrics { left: 17.3px; top: 84.1px; width: 342.5px; height: 56px; display: flex; overflow: hidden; }
+.metric { flex: none; min-width: 80px; margin-right: 18px; }
+.metric > span { display: block; white-space: nowrap; line-height: 16.8px; }
+.m-label { font-size: 11px; color: var(--label); }
+.m-value { font-family: "Ember Modern Display Std", "Ember Modern Text", sans-serif; font-size: 12px; font-weight: 700; color: #000; }
+.m-change { font-size: 11px; color: var(--label); }
+.fade-right {
+  -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 62px), rgba(0,0,0,.42) calc(100% - 18px), rgba(0,0,0,.25) 100%);
+  mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 62px), rgba(0,0,0,.42) calc(100% - 18px), rgba(0,0,0,.25) 100%);
+}
+.chart { left: -0.67px; top: -0.67px; overflow: visible; pointer-events: none; }   /* covers the card; must not swallow taps on the pills */
+.chart text { font-family: "Ember Modern Text", sans-serif; font-size: 13px; fill: var(--tick); }
+.chart .xlab-rot { font-size: 12.5px; }
+.chart .legend-sales, .chart .legend-units { font-size: 12.3px; }
+.chart .axis-title { fill: var(--ink); }
+.chart .legend-sales { fill: var(--ink); }
+.chart .legend-units { fill: #666; text-decoration: line-through; }
+.chart .grid { stroke: var(--grid); stroke-width: 1; }
+.chart .bar { fill: var(--orange); }
+.chart .bar.selected { fill: #ffb219; }
+.chart .hit { pointer-events: all; cursor: pointer; }
+.chart .tip-box { fill: #fff; filter: drop-shadow(0 0.5px 2.5px rgba(0,0,0,.28)); }
+.chart .tip-label { font-size: 11.5px; fill: var(--ink); }
+.chart .tip-value { font-size: 13px; font-weight: 700; fill: var(--ink); }
+.refreshed { right: 17px; top: 368.3px; font-size: 10px; line-height: 1.2; color: var(--label); white-space: nowrap; }
+
+/* Simple cards */
+.s-label { left: 17.3px; top: 50.4px; font-size: 11px; line-height: 1.2; color: var(--label); white-space: nowrap; }
+.s-value { left: 17.3px; top: 66.1px; font-family: "Ember Modern Display Std", "Ember Modern Text", sans-serif; font-size: 28px; font-weight: 700; line-height: 1.2; color: #000; white-space: nowrap; }
+
+/* Stat columns (Orders / Feedback / Shipments / Deal / Voucher) */
+.stats { left: 0; top: 0; width: 360px; height: 140px; }
+.stats-orders { top: 60.5px; }
+.stat { position: absolute; top: 0; height: 120px; }
+.stat > span { position: absolute; left: 0; white-space: nowrap; line-height: 1.2; }
+.st-label { top: 51.2px; font-size: 11px; color: var(--label); }
+.st-value { top: 67.3px; font-family: "Ember Modern Display Std", "Ember Modern Text", sans-serif; font-size: 28px; font-weight: 700; color: #000; }
+.st-sub { top: 103.3px; font-size: 11px; color: var(--label); }
+.stat-indent { left: 24.3px; }
+
+/* Orders dropdown */
+.dropdown {
+  left: 17.3px; top: 49.2px; width: 346.3px; height: 51.3px;
+  border: 0.67px solid #ebedf0; border-radius: 6px;
+}
+.dropdown span { position: absolute; left: 16.4px; top: 15.3px; font-size: 14.5px; line-height: 1.2; color: var(--ink-title); }
+.dropdown svg { position: absolute; right: 16.7px; top: 22.6px; }
+
+/* ---------- Tab bar ---------- */
+.tabbar {
+  position: absolute; left: 0; bottom: 0; width: 100%; height: 83px;
+  background: #fff; box-shadow: 0 calc(-1 * var(--hair)) 0 #a1a2a3;
+  display: flex; z-index: 4;
+}
+.tb { position: relative; flex: 1; height: 100%; }
+.tb img { position: absolute; left: 50%; transform: translateX(-50%); }
+.tb span {
+  position: absolute; left: 0; right: 0; top: 35.2px; text-align: center;
+  font-family: "SF Pro", -apple-system, system-ui, sans-serif; font-weight: 400; font-size: 10.5px; line-height: 1.2; color: var(--tab-grey);
+}
+.tb.active span { color: var(--tab-blue); }
+.home-indicator { position: absolute; left: 126.7px; top: 839px; width: 140px; height: 5px; border-radius: 2.5px; background: #000; z-index: 6; pointer-events: none; }
+
+/* ---------- Sheets ---------- */
+.backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.4); opacity: 0; pointer-events: none; transition: opacity .3s; z-index: 10; }
+.phone.sheet-open .backdrop { opacity: 1; pointer-events: auto; }
+.sheet {
+  position: absolute; left: 0; right: 0; bottom: 0; max-height: 92%;
+  background: #fff; border-radius: 12px 12px 0 0; padding: 6px 16px 34px;
+  transform: translateY(105%); transition: transform .38s cubic-bezier(.32,.72,0,1);
+  z-index: 11; overflow-y: auto; -webkit-overflow-scrolling: touch;
+}
+.sheet.open { transform: translateY(0); }
+.grabber { width: 36px; height: 5px; border-radius: 3px; background: #d1d4d7; margin: 0 auto 14px; }
+.sheet h3 { font-size: 20px; line-height: 1.2; color: var(--ink-title); margin-bottom: 4px; }
+.sheet-sub { font-size: 13px; line-height: 1.35; color: var(--label); margin-bottom: 14px; }
+.group { margin-bottom: 14px; }
+.group-title { font-size: 11px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: #6b7480; margin-bottom: 6px; }
+.sheet label { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 7px 0; border-bottom: 0.67px solid #ebedf0; }
+.sheet label span { font-size: 14px; color: var(--ink-title); }
+.sheet input {
+  width: 150px; height: 34px; padding: 0 10px; border: 0.67px solid #c5c9cd; border-radius: 8px; background: #fbfbfc;
+  font-size: 15px; text-align: right; color: #000; outline: none; -webkit-appearance: none; appearance: none;
+}
+.sheet input:focus { border-color: var(--teal); background: #fff; }
+.row3, .row4 { display: grid; gap: 8px; }
+.row3 { grid-template-columns: repeat(3, 1fr); }
+.row4 { grid-template-columns: repeat(4, 1fr); }
+.row3 label, .row4 label { flex-direction: column; align-items: stretch; gap: 4px; border: 0; padding: 4px 0; }
+.row3 label span, .row4 label span { font-size: 11px; color: var(--label); }
+.row3 input, .row4 input { width: 100%; text-align: left; padding: 0 8px; font-size: 14px; }
+.hint { font-size: 12px; line-height: 1.35; color: #b12704; min-height: 0; margin-top: 6px; }
+.hint:empty { display: none; }
+.sheet-actions { display: flex; gap: 10px; margin-top: 8px; }
+.btn-primary, .btn-secondary {
+  flex: 1; height: 44px; border-radius: 22px; text-align: center; font-size: 15px; font-weight: 500;
+}
+.btn-primary { background: var(--teal); color: #fff; }
+.btn-secondary { background: var(--teal-bg); color: var(--teal); }
+.btn-link { display: block; width: 100%; text-align: center; margin-top: 12px; font-size: 13px; color: #6b7480; }
+label.single { border: 0; }
+
+/* ---------- Launch screen ---------- */
+.splash {
+  position: absolute; inset: 0; z-index: 20;
+  background: linear-gradient(to bottom, #394b63 0%, #34445a 15%, #2e3b4c 30%, #1f2936 50%, #141b25 70%, #0d1015 85%, #06080a 100%);
+  transition: opacity .3s ease;
+}
+.splash img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.splash.hide { opacity: 0; pointer-events: none; }
+.splash.off { display: none; }
+
+/* ---------- Simulation switch & day picker ---------- */
+.switch-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0 6px; font-size: 15px; color: var(--ink-title); }
+.switch { position: relative; width: 51px; height: 31px; border-radius: 16px; background: #e9e9eb; transition: background .25s; flex: none; }
+.switch i { position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: 50%; background: #fff; box-shadow: 0 3px 8px rgba(0,0,0,.15), 0 1px 1px rgba(0,0,0,.16); transition: transform .25s cubic-bezier(.32,.72,0,1); }
+.switch.on { background: #34c759; }
+.switch.on i { transform: translateX(20px); }
+.hint-plain { color: #6b7480; }
+.day-row input { width: 170px; text-align: left; font-family: inherit; }
+.dropdown { cursor: pointer; }

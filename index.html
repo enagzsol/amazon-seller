@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Amazon Seller</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Amazon Seller">
+<meta name="theme-color" content="#f7f7f7" id="theme-color">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/app-icon-180.png">
+<link rel="apple-touch-icon" sizes="1024x1024" href="assets/app-icon.png">
+<script>/* first load of a session: navy behind the status bar for the launch screen */
+try { if (!sessionStorage.getItem("launched") && !/[?&]splash=0/.test(location.search)) document.documentElement.className = "splashing"; } catch (e) {}</script>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="phone" id="phone">
+
+  <!-- Status bar (hidden on the phone itself, where the real one shows) -->
+  <div class="status-bar">
+    <span class="time" id="clock">21:33</span>
+    <img class="status-icons" src="assets/status-icons.png" alt="">
+  </div>
+
+  <!-- Fixed header -->
+  <header class="topbar">
+    <button class="flag-btn" type="button" aria-label="Marketplace">
+      <img class="flag" src="assets/flag.png" alt="">
+      <svg class="flag-chev" viewBox="0 0 10 6" width="10" height="6"><path d="M1 1l4 4 4-4" fill="none" stroke="#232f3e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <img class="logo" id="logo" src="assets/logo.png" alt="amazon seller">
+    <img class="ic-sparkle" src="assets/sparkle.png" alt="">
+    <img class="ic-scan" src="assets/scan.png" alt="">
+  </header>
+
+  <!-- Scrolling page -->
+  <main class="scroll" id="scroll">
+    <div class="healthy">
+      <img class="check" src="assets/check.png" alt="">
+      <span class="healthy-text">Your store is healthy</span>
+      <svg class="healthy-chev" viewBox="0 0 7 11" width="7" height="11"><path d="M1 1l4.5 4.5L1 10" fill="none" stroke="#8e8e93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" type="button">Performance</button>
+      <button class="tab" type="button">Actions</button>
+      <button class="tab" type="button">Stay Informed</button>
+    </div>
+
+    <!-- Sales -->
+    <section class="card card-sales">
+      <h2 class="title title-sales">Sales</h2>
+      <button class="view-reports" type="button">View reports</button>
+      <button class="kebab" type="button" id="sales-kebab" aria-label="More"><i></i><i></i><i></i></button>
+
+      <div class="pills" id="pills">
+        <button class="pill active" data-range="today" type="button">Today</button>
+        <button class="pill" data-range="d7" type="button">7D</button>
+        <button class="pill" data-range="week" type="button">Week</button>
+        <button class="pill" data-range="d30" type="button">30D</button>
+        <button class="pill" data-range="month" type="button">Month</button>
+        <button class="pill" data-range="year" type="button">Year</button>
+      </div>
+
+      <div class="metrics fade-right" id="metrics">
+        <div class="metric"><span class="m-label">Total sales</span><span class="m-value" id="m-sales">£0.00</span><span class="m-change" id="c-sales">+0% last week</span></div>
+        <div class="metric"><span class="m-label">Units sold</span><span class="m-value" id="m-units">0</span><span class="m-change" id="c-units">+0% last week</span></div>
+        <div class="metric"><span class="m-label">Order items</span><span class="m-value" id="m-orders">0</span><span class="m-change" id="c-orders">+0% last week</span></div>
+        <div class="metric"><span class="m-label">Avg. units/order item</span><span class="m-value" id="m-avg">0</span><span class="m-change" id="c-avg">+0% last week</span></div>
+      </div>
+
+      <svg class="chart" id="chart" viewBox="0 0 381 399" width="381" height="399"></svg>
+      <span class="refreshed" id="refreshed">in 0 seconds</span>
+    </section>
+
+    <!-- Payments -->
+    <section class="card card-simple">
+      <h2 class="title">Payments</h2>
+      <button class="kebab" type="button" aria-label="More"><i></i><i></i><i></i></button>
+      <span class="s-label">Total Balance</span>
+      <span class="s-value" id="v-balance">£0.00</span>
+    </section>
+
+    <!-- Orders -->
+    <section class="card card-orders">
+      <h2 class="title">Orders</h2>
+      <button class="kebab" type="button" aria-label="More"><i></i><i></i><i></i></button>
+      <div class="dropdown" id="orders-dropdown" role="button"><span>ALL</span>
+        <svg viewBox="0 0 11 6" width="11" height="6"><path d="M1 1l4.5 4 4.5-4" fill="none" stroke="#868d95" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="stats stats-orders">
+        <div class="stat" style="left:31.7px"><span class="st-label">Pending</span><span class="st-value" id="v-pending">0</span><span class="st-sub">Last 7 days</span></div>
+        <div class="stat" style="left:120.7px"><span class="st-label">Undispatched</span><span class="st-value" id="v-undispatched">0</span><span class="st-sub">Last 7 days</span></div>
+        <div class="stat" style="left:223px"><span class="st-label">Dispatched</span><span class="st-value" id="v-dispatched">0</span><span class="st-sub">Last 7 days</span></div>
+      </div>
+    </section>
+
+    <!-- Buyer Messages -->
+    <section class="card card-simple">
+      <h2 class="title">Buyer Messages</h2>
+      <button class="kebab" type="button" aria-label="More"><i></i><i></i><i></i></button>
+      <span class="s-label">Response Needed</span>
+      <span class="s-value" id="v-messages">0</span>
+    </section>
+
+    <!-- Feedback -->
+    <section class="card card-simple">
+      <h2 class="title">Feedback</h2>
+      <button class="kebab" type="button" aria-label="More"><i></i><i></i><i></i></button>
+      <div class="stats fade-right">
+        <div class="stat" style="left:27.3px"><span class="st-label">Average</span><span class="st-value" id="v-fb-avg">5</span><span class="st-sub">Last 30 days</span></div>
+        <div class="stat" style="left:124px"><span class="st-label">Negative</span><span class="st-value" id="v-fb-neg">0</span><span class="st-sub">Last 30 days</span></div>
+        <div class="stat" style="left:220px"><span class="st-label">Positive</span><span class="st-value" id="v-fb-pos">1</span><span class="st-sub">Last 30 days</span></div>
+        <div class="stat" style="left:316px"><span class="st-label">Neutral</span><span class="st-value" id="v-fb-neu">0</span><span class="st-sub">Last 30 days</span></div>
+      </div>
+    </section>
+
+    <!-- Shipments -->
+    <section class="card card-simple">
+      <h2 class="title">Shipments</h2>
+      <button class="kebab" type="button" aria-label="More"><i></i><i></i><i></i></button>
+      <div class="stats fade-right">
+        <div class="stat" style="left:18.3px"><span class="st-label">Outstanding problems</span><span class="st-value">0</span><span class="st-sub">Last 120 days</span></div>
+        <div class="stat" style="left:145px"><span class="st-label">Missing tracking IDs</span><span class="st-value">0</span><span class="st-sub">Last 120 days</span></div>
+        <div class="stat" style="left:265px"><span class="st-label">Working</span><span class="st-value">0</span><span class="st-sub">Last 120 days</span></div>
+      </div>
+    </section>
+
+    <!-- Inventory Performance Index -->
+    <section class="card card-simple">
+      <h2 class="title">Inventory Performance Index</h2>
+      <button class="kebab" type="button" aria-label="More"><i></i><i></i><i></i></button>
+      <span class="s-label">Performance Index</span>
+      <span class="s-value" id="v-ipi">896</span>
+    </section>
+
+    <!-- Deal Sales -->
+    <section class="card card-simple">
+      <h2 class="title">Deal Sales</h2>
+      <button class="kebab" type="button" aria-label="More"><i></i><i></i><i></i></button>
+      <div class="stat stat-indent"><span class="st-label">Sales</span><span class="st-value" id="v-deal">£0.00</span><span class="st-sub">Last 30 days</span></div>
+    </section>
+
+    <!-- Voucher Sales -->
+    <section class="card card-simple">
+      <h2 class="title">Voucher Sales</h2>
+      <button class="kebab" type="button" aria-label="More"><i></i><i></i><i></i></button>
+      <div class="stat stat-indent"><span class="st-label">Sales</span><span class="st-value" id="v-voucher">£0.00</span><span class="st-sub">Last 30 days</span></div>
+    </section>
+    <div class="scroll-end"></div>
+  </main>
+
+  <!-- Tab bar -->
+  <nav class="tabbar">
+    <div class="tb active"><img src="assets/tab-home.png" alt="" style="width:28px;height:24px;top:5.7px"><span>Home</span></div>
+    <div class="tb"><img src="assets/tab-orders.png" alt="" style="width:25.33px;height:25.33px;top:5.7px"><span>Orders</span></div>
+    <div class="tb"><img src="assets/tab-products.png" alt="" style="width:30.33px;height:30px;top:3px"><span>Products</span></div>
+    <div class="tb"><img src="assets/tab-inventory.png" alt="" style="width:25.33px;height:28px;top:3px"><span>Inventory</span></div>
+    <div class="tb"><img src="assets/tab-menu.png" alt="" style="width:25.33px;height:18px;top:9.3px"><span>Menu</span></div>
+  </nav>
+  <div class="home-indicator"></div>
+
+  <!-- Launch screen -->
+  <div class="splash" id="splash"><img src="assets/splash-logo.png" alt="amazon seller"></div>
+
+  <!-- Setup sheet -->
+  <div class="backdrop" id="backdrop"></div>
+  <div class="sheet" id="setup">
+    <div class="grabber"></div>
+    <h3>Enter your figures</h3>
+    <p class="sheet-sub">Each day you enter is kept. Pick a past day to overwrite it. Blank periods are estimated from what you did enter.</p>
+    <form id="setup-form" autocomplete="off">
+      <div class="group">
+        <label class="day-row"><span>Day</span><input type="date" name="day"></label>
+        <div class="hint hint-plain" id="history"></div>
+      </div>
+      <div class="group">
+        <div class="group-title" id="day-title">Today so far</div>
+        <label><span>Total sales (£)</span><input name="sales" inputmode="decimal" placeholder="0.00"></label>
+        <label><span>Order items</span><input name="orders" inputmode="numeric" placeholder="0"></label>
+        <label><span>Total balance (£)</span><input name="balance" inputmode="decimal" placeholder="0.00"></label>
+      </div>
+      <div class="group">
+        <div class="group-title">Feedback · last 30 days</div>
+        <div class="row4">
+          <label><span>Average</span><input name="fbAvg" inputmode="decimal" placeholder="5"></label>
+          <label><span>Negative</span><input name="fbNeg" inputmode="numeric" placeholder="0"></label>
+          <label><span>Positive</span><input name="fbPos" inputmode="numeric" placeholder="0"></label>
+          <label><span>Neutral</span><input name="fbNeu" inputmode="numeric" placeholder="0"></label>
+        </div>
+      </div>
+      <div class="group">
+        <div class="group-title" id="periods-title">Total sales per period (£) · optional</div>
+        <label><span>Last 7 days</span><input name="d7" inputmode="decimal" placeholder="estimated"></label>
+        <label><span>Last 30 days</span><input name="d30" inputmode="decimal" placeholder="estimated"></label>
+        <label><span>This month</span><input name="month" inputmode="decimal" placeholder="estimated"></label>
+        <label><span>This year</span><input name="year" inputmode="decimal" placeholder="estimated"></label>
+        <label><span>Last year</span><input name="lastYear" inputmode="decimal" placeholder="estimated"></label>
+        <div class="hint" id="consistency"></div>
+      </div>
+      <div class="group">
+        <div class="group-title">Orders · last 7 days · optional</div>
+        <div class="row3">
+          <label><span>Pending</span><input name="pending" inputmode="numeric" placeholder="auto"></label>
+          <label><span>Undispatched</span><input name="undispatched" inputmode="numeric" placeholder="auto"></label>
+          <label><span>Dispatched</span><input name="dispatched" inputmode="numeric" placeholder="auto"></label>
+        </div>
+      </div>
+      <div class="group">
+        <div class="group-title">Other cards · optional</div>
+        <div class="row4">
+          <label><span>Messages</span><input name="messages" inputmode="numeric" placeholder="0"></label>
+          <label><span>IPI</span><input name="ipi" inputmode="numeric" placeholder="896"></label>
+          <label><span>Deal £</span><input name="deal" inputmode="decimal" placeholder="0.00"></label>
+          <label><span>Voucher £</span><input name="voucher" inputmode="decimal" placeholder="0.00"></label>
+        </div>
+      </div>
+      <div class="sheet-actions">
+        <button type="button" class="btn-secondary" id="setup-cancel">Cancel</button>
+        <button type="submit" class="btn-primary">Save</button>
+      </div>
+      <button type="button" class="btn-link" id="setup-reset">Clear everything</button>
+    </form>
+  </div>
+
+  <!-- Simulation sheet (opened from the Orders card's ALL dropdown) -->
+  <div class="sheet sheet-small" id="sim-sheet">
+    <div class="grabber"></div>
+    <h3>Simulation</h3>
+    <p class="sheet-sub">When on, every new day is generated from your sales so far, with stock-outs, supply hiccups, cash-flow squeezes, promotions and seasonal swings. Days that have passed are kept as a backlog. Turn it off to enter or overwrite a day yourself; turning it back on saves your changes and continues from them.</p>
+    <div class="switch-row">
+      <span>Simulate days going forward</span>
+      <button type="button" class="switch" id="sim-switch" aria-label="Toggle simulation"><i></i></button>
+    </div>
+    <div class="hint hint-plain" id="sim-status"></div>
+    <div class="sheet-actions">
+      <button type="button" class="btn-secondary" id="sim-enter">Enter a day</button>
+      <button type="button" class="btn-primary" id="sim-done">Done</button>
+    </div>
+  </div>
+</div>
+<script src="js/app.js"></script>
+</body>
+</html>
